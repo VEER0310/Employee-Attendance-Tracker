@@ -1,0 +1,81 @@
+<h2>Employees</h2>
+
+<!-- Creating employee -->
+<div class="card mb-4">
+  <div class="card-header">Add New Employee</div>
+  <div class="card-body">
+
+  
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+
+      
+      <div class="mb-3">
+        <label class="form-label">Policy</label>
+        <select formControlName="policyId" class="form-select">
+          <option value="">-- Select Policy --</option>
+          <option *ngFor="let p of policies" [value]="p.id">{{ p.name }}</option>
+        </select>
+      
+        <div *ngIf="employeeForm.get('policyId')?.invalid && employeeForm.get('policyId')?.touched"
+             class="text-danger">Policy is required.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">First Name</label>
+        <input formControlName="firstName" class="form-control" type="text" />
+        
+        <div *ngIf="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched"
+             class="text-danger">First name is required.</div>
+      </div>
+
+     
+      <div class="mb-3">
+        <label class="form-label">Last Name</label>
+        <input formControlName="lastName" class="form-control" type="text" />
+        <div *ngIf="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched"
+             class="text-danger">Last name is required.</div>
+      </div>
+
+     
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input formControlName="email" class="form-control" type="email" />
+        <div *ngIf="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched"
+             class="text-danger">Valid email is required.</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="employeeForm.invalid">
+        Add Employee
+      </button>
+
+    </form>
+  </div>
+</div>
+
+
+<table class="table table-bordered table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Id</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Policy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of employees">
+      <td>{{ e.id }}</td>
+      <td>{{ e.firstName }}</td>
+      <td>{{ e.lastName }}</td>
+      <td>{{ e.email }}</td>
+      <td>{{ e.policyName }}</td>
+    </tr>
+        <tr *ngIf="employees.length === 0">
+      <td colspan="5" class="text-center">No employees found.</td>
+    </tr>
+  </tbody>
+</table>
